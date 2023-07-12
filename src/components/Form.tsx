@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default function Form() {
+type FormProps = {
+  onChange: (event: React.MouseEvent<HTMLButtonElement>) => void;
+};
+export default function Form(props: FormProps) {
+  const { onChange } = props;
   return (
     <>
       <label>
@@ -22,7 +26,7 @@ export default function Form() {
         <input type="text" />
       </label>
       <button>Cadastrar</button>
-      <button>Cancelar</button>
+      <button type="button" onClick={ onChange }>Cancelar</button>
     </>
   );
 }
