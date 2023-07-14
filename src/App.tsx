@@ -34,13 +34,15 @@ function App() {
   function validateButton() {
     const { nome, login, senha } = formInfo;
     if (nome && login && senha) {
-      const senhaLength = senha.length >= 8 && senha.length <= 16;
+      const senhaLengthMin = senha.length >= 8; // && senha.length <= 16;
+      const senhaLengthMax = senha.length <= 16;
       const senhaNumbers = /\d/.test(senha);
       const senhaLetters = /[a-zA-Z]/.test(senha);
       const senhaSpecialCharacters = /[!@#$%^&*]/.test(senha);
 
       return (
-        senhaLength
+        senhaLengthMin
+        && senhaLengthMax
         && senhaLetters
         && senhaNumbers
         && senhaSpecialCharacters

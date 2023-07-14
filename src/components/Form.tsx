@@ -11,6 +11,8 @@ type FormProps = {
   validateButton: () => boolean
 };
 export default function Form(props: FormProps) {
+  const valid = 'valid-password-check';
+  const invalid = 'invalid-password-check';
   const { onChange, formInfo, handleChange, validateButton } = props;
   const { nome, login, senha } = formInfo;
   return (
@@ -46,6 +48,20 @@ export default function Form(props: FormProps) {
         URL
         <input type="text" />
       </label>
+      <div>
+        <p className={ senha.length >= 8 ? valid : invalid }>
+          Possuir 8 ou mais caracteres
+        </p>
+        <p className={ senha.length <= 16 ? valid : invalid }>
+          Possuir até 16 caracteres
+        </p>
+        <p className={ /\d/.test(senha) && /[a-zA-Z]/.test(senha) ? valid : invalid }>
+          Possuir letras e números
+        </p>
+        <p className={ /[!@#$%^&*]/.test(senha) ? valid : invalid }>
+          Possuir algum caractere especial
+        </p>
+      </div>
       <button disabled={ !validateButton() }>Cadastrar</button>
       <button type="button" onClick={ onChange }>Cancelar</button>
     </>
