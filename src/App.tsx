@@ -19,6 +19,7 @@ const initialFormInfo = {
 function App() {
   const [form, setForm] = useState(false);
   const [services, setServices] = useState<FormInfoTypes[]>([]);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleForm = () => {
     setForm((state) => !state);
@@ -60,6 +61,18 @@ function App() {
     setFormInfo(initialFormInfo);
   }
 
+  function handleDeleteService(index: number) {
+    setServices(() => {
+      const newServices = [...services];
+      newServices.splice(index, 1);
+      return newServices;
+    });
+  }
+
+  function handlePassword() {
+    setShowPassword((state) => (!state));
+  }
+
   return (
     <>
       <div>
@@ -68,6 +81,14 @@ function App() {
       <h1>
         Gerenciador de senhas
       </h1>
+      <label>
+        <input
+          type="checkbox"
+          checked={ showPassword }
+          onChange={ handlePassword }
+        />
+        Esconder senhas
+      </label>
       {services.length === 0 ? (
         <p>Nenhuma senha cadastrada</p>
       ) : (
@@ -83,8 +104,15 @@ function App() {
               </p>
               <p>
                 Senha:
-                {senha}
+                {showPassword ? '******' : senha}
               </p>
+              <button
+                type="button"
+                onClick={ () => handleDeleteService(index) }
+                data-testid="remove-btn"
+              >
+                Remover Serviço
+              </button>
             </li>
           ))}
         </ul>
