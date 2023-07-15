@@ -1,11 +1,13 @@
 import './App.css';
 import { useState } from 'react';
 import Form from './components/Form';
+import { FormInfoTypes } from './components/FormTypes';
 
 const initialFormInfo = {
   nome: '',
   login: '',
   senha: '',
+  url: '',
 };
 
 // export type FormInfoTypes = {
@@ -16,6 +18,7 @@ const initialFormInfo = {
 
 function App() {
   const [form, setForm] = useState(false);
+  const [services, setServices] = useState<FormInfoTypes[]>([]);
 
   const handleForm = () => {
     setForm((state) => !state);
@@ -51,6 +54,12 @@ function App() {
     return false;
   }
 
+  function handleServices() {
+    setServices((prevServices) => [...prevServices, formInfo]);
+    setForm(false);
+    setFormInfo(initialFormInfo);
+  }
+
   return (
     <>
       <div>
@@ -59,12 +68,34 @@ function App() {
       <h1>
         Gerenciador de senhas
       </h1>
+      {services.length === 0 ? (
+        <p>Nenhuma senha cadastrada</p>
+      ) : (
+        <ul>
+          {services.map(({ nome, login, senha, url }, index) => (
+            <li key={ index }>
+              <a href={ url }>
+                {nome}
+              </a>
+              <p>
+                Login:
+                {login}
+              </p>
+              <p>
+                Senha:
+                {senha}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
       {form ? (
         <Form
           onChange={ () => handleForm() }
           handleChange={ (event) => handleChange(event) }
           formInfo={ formInfo }
           validateButton={ () => validateButton() }
+          handleServices={ () => handleServices() }
         />
       ) : (
         <button type="button" onClick={ handleForm }>Cadastrar nova senha</button>

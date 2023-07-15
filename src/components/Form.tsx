@@ -8,13 +8,15 @@ type FormProps = {
     event:
     React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>)
   => void,
-  validateButton: () => boolean
+  validateButton: () => boolean,
+  handleServices: () => void;
 };
+
 export default function Form(props: FormProps) {
   const valid = 'valid-password-check';
   const invalid = 'invalid-password-check';
-  const { onChange, formInfo, handleChange, validateButton } = props;
-  const { nome, login, senha } = formInfo;
+  const { onChange, formInfo, handleChange, validateButton, handleServices } = props;
+  const { nome, login, senha, url } = formInfo;
   return (
     <>
       <label>
@@ -46,7 +48,12 @@ export default function Form(props: FormProps) {
       </label>
       <label>
         URL
-        <input type="text" />
+        <input
+          type="text"
+          name="url"
+          value={ url }
+          onChange={ handleChange }
+        />
       </label>
       <div>
         <p className={ senha.length >= 8 ? valid : invalid }>
@@ -62,7 +69,7 @@ export default function Form(props: FormProps) {
           Possuir algum caractere especial
         </p>
       </div>
-      <button disabled={ !validateButton() }>Cadastrar</button>
+      <button disabled={ !validateButton() } onClick={ handleServices }>Cadastrar</button>
       <button type="button" onClick={ onChange }>Cancelar</button>
     </>
   );
