@@ -99,11 +99,10 @@ function App() {
                 {nome}
               </a>
               <p>
-                Login:
                 {login}
               </p>
               <p>
-                Senha:
+
                 {showPassword ? '******' : senha}
               </p>
               <button
